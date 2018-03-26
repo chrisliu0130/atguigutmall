@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.AttrDao">
+	
+	
+	
+	<insert id="save_attr" useGeneratedKeys="true" keyProperty="id">
+		insert into t_mall_attr (shxm_mch,flbh2) values (#{shxm_mch},#{flbh2});
+	</insert>
+	
+	<!-- <insert id="save_attr" useGeneratedKeys="true" keyProperty="attr.id">
+		insert into t_mall_attr (shxm_mch,flbh2) values (#{shxm_mch},#{flbh2});
+	</insert> -->
+	
+	<insert id="save_value">
+		insert into t_mall_value (shxzh,shxm_id,shxzh_mch) values 
+		<foreach collection="list_value" item="value" separator=",">
+		(#{value.shxzh},#{id},#{value.shxzh_mch})
+		</foreach>
+	</insert>
+
+	<!-- <insert id="save_value">
+	  insert into t_mall_value (shxzh,shxm_id,shxzh_mch) values 
+		<foreach collection="list_value" item="value" separator=",">
+		(#{value.shxzh},#{attr_id},#{value.shxzh_mch})
+		</foreach>
+	</insert> -->
+</mapper>
