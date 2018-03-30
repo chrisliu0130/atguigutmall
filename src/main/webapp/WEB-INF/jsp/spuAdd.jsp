@@ -5,42 +5,13 @@
 <head>
 <%String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";%>
 <base href="<%=basePath %>" />
+	<link rel="stylesheet" type="text/css" href="js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="js/easyui/themes/icon.css">
+	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript">
-	function click_img(index){
-		$("#file_"+index).click();
-	}
-	
-	function replace_image(index){
-		//获得图片对象  H5
-		var blob_image=$("#file_"+index)[0].files[0];
-		var url = window.URL.createObjectURL(blob_image);
-		
-		//替换
-		$("#img_"+index).attr("src",url);
-		
-		var length = $(":file").size();
-	
-		if((index+1)==length && length<4){
-			add_image(index);
-		}
-		
-	}
-	
-	function add_image(index){
-		var a ='<div id="d_'+(index+1)+'" style="float:left">';
-		var b ='<input id="file_'+(index+1)+'" type="file" name="files" style="display: none" onchange="replace_image('+(index+1)+')"/>';
-		var c ='<img id="img_'+(index+1)+'" onclick="click_img('+(index+1)+')" src="image/upload_hover.png" style="cursor:pointer;" width="100px" height="100px"/>';
-		var d ='</div>';
-		var total=a+b+c+d;
-		
-		$("#d_"+index).after(total);
-	}
-	
-	
-</script>
+
 </head>
 <body>
 		有spu："flbh1":${spu.flbh1} | "flbh2":${spu.flbh2} | "pp_id":${spu.pp_id}<br>
@@ -60,5 +31,39 @@
 			</div>
 		  <input type="submit" value="提交">
 		</form>
+		
+		<script type="text/javascript">
+			function click_img(index){
+				$("#file_"+index).click();
+			}
+			
+			function replace_image(index){
+				//获得图片对象  H5
+				var blob_image=$("#file_"+index)[0].files[0];
+				var url = window.URL.createObjectURL(blob_image);
+				
+				//替换
+				$("#img_"+index).attr("src",url);
+				
+				var length = $(":file").size();
+			
+				if((index+1)==length && length<4){
+					add_image(index);
+				}
+				
+			}
+			
+			function add_image(index){
+				var a ='<div id="d_'+(index+1)+'" style="float:left">';
+				var b ='<input id="file_'+(index+1)+'" type="file" name="files" style="display: none" onchange="replace_image('+(index+1)+')"/>';
+				var c ='<img id="img_'+(index+1)+'" onclick="click_img('+(index+1)+')" src="image/upload_hover.png" style="cursor:pointer;" width="100px" height="100px"/>';
+				var d ='</div>';
+				var total=a+b+c+d;
+				
+				$("#d_"+index).after(total);
+			}
+			
+			
+		</script>
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +30,15 @@ public class SpuController {
 
 	@Autowired
 	SpuDao spuDao;
+
+	@ResponseBody
+	@RequestMapping("get_spu_list")
+	public List<T_MALL_PRODUCT> get_spu_list(int pp_id, int flbh2) {
+		
+		List<T_MALL_PRODUCT> spu_list = spuService.get_spu_list(pp_id, flbh2);
+
+		return spu_list;
+	}
 
 	@RequestMapping("testjson")
 	public String testjson() throws Exception {
@@ -61,11 +71,13 @@ public class SpuController {
 		// 保存商品信息
 		spuService.insert_spu(tmp, list_image);
 
-		ModelAndView mv = new ModelAndView("redirect:/goto_spu_add.do");
+		ModelAndView mv = new ModelAndView("redirect:/index.do");
 
-		mv.addObject("flbh1", tmp.getFlbh1());
+	/*	mv.addObject("flbh1", tmp.getFlbh1());
 		mv.addObject("flbh2", tmp.getFlbh2());
-		mv.addObject("pp_id", tmp.getPp_id());
+		mv.addObject("pp_id", tmp.getPp_id());*/
+		mv.addObject("url", "goto_spu_add.do?flbh1="+tmp.getFlbh1()+"&flbh2="+tmp.getFlbh2()+"&pp_id="+tmp.getPp_id());
+		mv.addObject("title", "添加商品信息");
 
 		/*
 		 * System.out.println("Shp_mch:" + tmp.getShp_mch() + "--Flbh1:" +
@@ -78,6 +90,7 @@ public class SpuController {
 
 	@RequestMapping("goto_spu_add")
 	public String goto_spu_add(ModelMap model, T_MALL_PRODUCT spu) {
+		//System.out.println("spucontroller:goto_spu_add");
 		model.put("spu", spu);
 		return "spuAdd";
 	}

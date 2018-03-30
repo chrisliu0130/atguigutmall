@@ -7,30 +7,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.atguigu.bean.MODEL_T_MALL_ATTR;
 import com.atguigu.bean.OBJECT_T_MALL_ATTR;
 import com.atguigu.bean.T_MALL_PRODUCT;
 import com.atguigu.service.AttrService;
+import com.google.gson.Gson;
 
 @Controller
 public class AttrController {
 
 	@Autowired
 	AttrService attrService;
+	
+	
 
 	/*
 	 * 返回的是一个html页面
 	 */
-	@RequestMapping("goto_attrListInner")
+	/*@RequestMapping("goto_attrListInner")
 	public String goto_attrListInner(Model model, int flbh2) {
 		List<OBJECT_T_MALL_ATTR> list_attr = new ArrayList<OBJECT_T_MALL_ATTR>();
 		
-		//list_attr =attrService.get_attr_list(flbh2);
+		list_attr =attrService.get_attr_list(flbh2);
 		model.addAttribute("flbh2", flbh2);
 		model.addAttribute("list_attr", list_attr);
 		return "attrListInner";
+	}*/
+	
+	/*
+	 * 返回的是一个json对象，给datagrid加载
+	 */
+	@RequestMapping("goto_attrListInner")
+	@ResponseBody
+	public Object goto_attrListInner(Model model, int flbh2) {
+		List<OBJECT_T_MALL_ATTR> list_attr = new ArrayList<OBJECT_T_MALL_ATTR>();
+		
+		list_attr =attrService.get_attr_list(flbh2);
+		model.addAttribute("flbh2", flbh2);
+		model.addAttribute("list_attr", list_attr);
+		
+		Gson gson=new Gson();
+		
+		return gson.toJson(list_attr);
 	}
 
 	@RequestMapping("goto_attr_add")
@@ -57,9 +78,12 @@ public class AttrController {
 		 */
 		/* attrService.insert_attr(flbh2,attrList); */
 
-		ModelAndView mv = new ModelAndView("redirect:/goto_attr_add.do");
-
+		//ModelAndView mv = new ModelAndView("redirect:/goto_attr_add.do");
+		//目的是让页面跳往main
+		ModelAndView mv = new ModelAndView("redirect:/index.do");
 		mv.addObject("flbh2", flbh2);
+		mv.addObject("url", "goto_attr_add.do?flbh2="+flbh2);
+		mv.addObject("title", "添加属性");
 
 		return mv;
 	}

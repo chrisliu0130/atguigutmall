@@ -1,5 +1,7 @@
 package com.atguigu.dao;
 
+import java.util.List;
+
 import com.atguigu.bean.OBJECT_T_MALL_ATTR;
 
 public interface AttrDao {
@@ -8,7 +10,7 @@ public interface AttrDao {
 
 	void save_value(OBJECT_T_MALL_ATTR attr);
 
-	/*List<OBJECT_T_MALL_ATTR> select_attr_list(int flbh2);*/
+	List<OBJECT_T_MALL_ATTR> select_attr_list(int flbh2);
 
 	/*void save_attr(int flbh2, OBJECT_T_MALL_ATTR attr);
 

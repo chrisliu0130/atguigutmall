@@ -37,4 +37,14 @@ public class SpuServiceimpl implements SpuService {
 		spuDao.insert_images(paramMap);
 	}
 
+	@Override
+	public List<T_MALL_PRODUCT> get_spu_list(int pp_id, int flbh2) {
+		Map<Object, Object> paramMap=new HashMap<Object, Object>();
+		paramMap.put("pp_id", pp_id);
+		paramMap.put("flbh2", flbh2);
+		
+		List<T_MALL_PRODUCT> spu_list=spuDao.select_spu_list(paramMap);
+		return spu_list;
+	}
+
 }

@@ -2,7 +2,6 @@ package com.atguigu.serviceimpl;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +25,12 @@ public class AttrServiceImpl implements AttrService {
 
 	}
 
-	/*@Override
+	@Override
 	public List<OBJECT_T_MALL_ATTR> get_attr_list(int flbh2) {
 		List<OBJECT_T_MALL_ATTR> list_attr = attrDao.select_attr_list(flbh2);
 		return list_attr;
 	}
-*/
+
 	/*
 	 * @Override public void insert_attr(@Param("flbh2")int
 	 * flbh2, @Param("attrList")List<OBJECT_T_MALL_ATTR> attrList) { for

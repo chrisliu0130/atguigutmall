@@ -16,15 +16,26 @@
 </script>
 </head>
 <body>
-		属性内嵌页
+		<!-- 属性内嵌页 -->
+		<%-- ${list_attr } --%>
 		<hr>
-		<c:forEach items="${list_attr }" var="attr">
-			${ attr.shxm_mch } :
-			<c:forEach items="${attr.list_value }" var="value" >
-				${value.shxzh } ${value.shxzh_mch }
-			</c:forEach>
-			<br>
-		</c:forEach>
+		<c:if test="${!empty list_attr }">
+			<c:forEach items="${list_attr }" var="attr">
+				${ attr.shxm_mch } :
+				<c:forEach items="${attr.list_value }" var="value" >
+					${value.shxzh } ${value.shxzh_mch }
+				</c:forEach>
+				<br>
+		    </c:forEach>
+		</c:if>
+		
+		<c:if test="${empty list_attr }">
+		    属性为空！
+		</c:if>
+		
+		
+		
+		
 		
 </body>
 </html>
