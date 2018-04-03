@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.atguigu.bean.MODET_T_MALL_SKU_ATTR_VALUE;
 import com.atguigu.bean.OBJECT_T_MALL_ATTR;
 import com.atguigu.bean.T_MALL_PRODUCT;
+import com.atguigu.bean.T_MALL_PRODUCT_COLOR;
+import com.atguigu.bean.T_MALL_PRODUCT_VERSION;
 import com.atguigu.bean.T_MALL_SKU;
 import com.atguigu.service.AttrService;
 import com.atguigu.service.SkuService;
@@ -25,13 +27,16 @@ public class SkuController {
 	AttrService attrService;
 
 	@RequestMapping("save_sku")
-	public ModelAndView save_sku(T_MALL_SKU sku, MODET_T_MALL_SKU_ATTR_VALUE list_attr, T_MALL_PRODUCT tmp) {
+	public ModelAndView save_sku(T_MALL_SKU sku, MODET_T_MALL_SKU_ATTR_VALUE list_attr, T_MALL_PRODUCT tmp,
+			int ys_id, int bb_id) {
 
-		skuService.save_sku(sku, list_attr.getList_attr(), tmp);
+		// 将颜色信息和版本信息保存到t_mall_product_sku_info,考虑到需要sku_id....
+		skuService.save_sku(sku, list_attr.getList_attr(), tmp, ys_id, bb_id);
 
 		ModelAndView mv = new ModelAndView("redirect:/index.do");
 		mv.addObject("flbh1", tmp.getFlbh1());
 		mv.addObject("flbh2", tmp.getFlbh2());
+		// 下面两个easyui用
 		mv.addObject("url", "goto_sku_add.do?flbh2=" + tmp.getFlbh2() + "&flbh1=" + tmp.getFlbh1());
 		mv.addObject("title", "库存单元信息");
 		return mv;

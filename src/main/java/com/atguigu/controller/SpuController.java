@@ -1,6 +1,7 @@
 package com.atguigu.controller;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.atguigu.bean.MODEL_T_MALL_PRODUCT_COLOR;
+import com.atguigu.bean.MODEL_T_MALL_PRODUCT_VERSION;
 import com.atguigu.bean.T_MALL_CLASS_1;
 import com.atguigu.bean.T_MALL_PRODUCT;
+import com.atguigu.bean.T_MALL_PRODUCT_COLOR;
+import com.atguigu.bean.T_MALL_PRODUCT_VERSION;
 import com.atguigu.dao.SpuDao;
 import com.atguigu.service.SpuService;
 import com.atguigu.service.TestService;
@@ -32,9 +37,27 @@ public class SpuController {
 	SpuDao spuDao;
 
 	@ResponseBody
+	@RequestMapping("get_version_list")
+	public List<T_MALL_PRODUCT_VERSION> get_version_list(int shp_id) {
+
+		List<T_MALL_PRODUCT_VERSION> version_list = spuService.get_verion_list(shp_id);
+
+		return version_list;
+	}
+
+	@ResponseBody
+	@RequestMapping("get_color_list")
+	public List<T_MALL_PRODUCT_COLOR> get_color_list(int shp_id) {
+
+		List<T_MALL_PRODUCT_COLOR> color_list = spuService.get_color_list(shp_id);
+
+		return color_list;
+	}
+
+	@ResponseBody
 	@RequestMapping("get_spu_list")
 	public List<T_MALL_PRODUCT> get_spu_list(int pp_id, int flbh2) {
-		
+
 		List<T_MALL_PRODUCT> spu_list = spuService.get_spu_list(pp_id, flbh2);
 
 		return spu_list;
@@ -62,21 +85,24 @@ public class SpuController {
 	}
 
 	@RequestMapping("spu_add")
-	public ModelAndView spu_add(@RequestParam("files") MultipartFile[] files, T_MALL_PRODUCT tmp) {
+	public ModelAndView spu_add(@RequestParam("files") MultipartFile[] files, T_MALL_PRODUCT tmp,
+			MODEL_T_MALL_PRODUCT_COLOR color_list, MODEL_T_MALL_PRODUCT_VERSION version_list) {
 
 		// 上传图片
 		// 需要上换图片的工具类
 		List<String> list_image = MyFileUpLoad.upload_image(files);
 
-		// 保存商品信息
-		spuService.insert_spu(tmp, list_image);
+		// 保存商品信息 // 保存颜色和版本信息
+		spuService.insert_spu(tmp, list_image, color_list, version_list);
 
 		ModelAndView mv = new ModelAndView("redirect:/index.do");
 
-	/*	mv.addObject("flbh1", tmp.getFlbh1());
-		mv.addObject("flbh2", tmp.getFlbh2());
-		mv.addObject("pp_id", tmp.getPp_id());*/
-		mv.addObject("url", "goto_spu_add.do?flbh1="+tmp.getFlbh1()+"&flbh2="+tmp.getFlbh2()+"&pp_id="+tmp.getPp_id());
+		/*
+		 * mv.addObject("flbh1", tmp.getFlbh1()); mv.addObject("flbh2", tmp.getFlbh2());
+		 * mv.addObject("pp_id", tmp.getPp_id());
+		 */
+		mv.addObject("url",
+				"goto_spu_add.do?flbh1=" + tmp.getFlbh1() + "&flbh2=" + tmp.getFlbh2() + "&pp_id=" + tmp.getPp_id());
 		mv.addObject("title", "添加商品信息");
 
 		/*
@@ -90,7 +116,7 @@ public class SpuController {
 
 	@RequestMapping("goto_spu_add")
 	public String goto_spu_add(ModelMap model, T_MALL_PRODUCT spu) {
-		//System.out.println("spucontroller:goto_spu_add");
+		// System.out.println("spucontroller:goto_spu_add");
 		model.put("spu", spu);
 		return "spuAdd";
 	}

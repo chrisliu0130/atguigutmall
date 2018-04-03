@@ -64,7 +64,7 @@
 	<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>
 	<div data-options="region:'center',title:'Center'">
 		<!-- 内嵌的选项卡页面 -->
-		<div id="tt" class="easyui-tabs" style="width:700px;height:400px">
+		<div id="tt" class="easyui-tabs" style="width:700px;height:500px">
 			
 		</div>
 	</div>

@@ -10,4 +10,8 @@ public interface SkuDao {
 
 	void insert_sku_av(Map<Object, Object> paramMap);
 
+	void insert_sku_ys_bb(Map<Object, Object> paramMap2);
+
+
+
 }

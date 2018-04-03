@@ -3,36 +3,78 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atguigu.dao.SpuDao">
-			
-	<select id="select_spu_list" resultType="com.atguigu.bean.T_MALL_PRODUCT">
-	select *
-	from t_mall_product 
-	where pp_id=#{pp_id} and flbh2=#{flbh2}
+
+
+	<!-- 根据shp_id得到版本信息 -->
+	<select id="select_verion_list"
+		resultType="com.atguigu.bean.T_MALL_PRODUCT_VERSION">
+		select * from t_mall_product_version
+		where shp_id =
+		#{shp_id}
 	</select>
 
-	
-	<insert id="insertSpu" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
-	parameterType="com.atguigu.bean.T_MALL_PRODUCT">
-		insert into t_mall_product (shp_mch,shp_tp,flbh1,flbh2,pp_id,shp_msh)
-	 values (#{shp_mch},#{shp_tp},#{flbh1},#{flbh2},#{pp_id},#{shp_msh});
+	<!-- 根据shp_id得到颜色信息 -->
+	<select id="select_color_list"
+		resultType="com.atguigu.bean.T_MALL_PRODUCT_COLOR">
+		select * from t_mall_product_color
+		where shp_id = #{shp_id}
+	</select>
+
+
+	<!-- 插入颜色信息 -->
+	<insert id="insert_color">
+		insert into t_mall_product_color
+		(shp_id,shp_ys)
+		values
+		<foreach collection="color_list" item="color" separator=",">
+			(#{shp_id},#{color.shp_ys})
+		</foreach>
 	</insert>
-	
-	<insert id="insert_spu" useGeneratedKeys="true" keyProperty="id">
-		insert into t_mall_product 
+
+	<!-- 插入版本信息 -->
+	<insert id="insert_version">
+		insert into t_mall_product_version
+		(shp_id,shp_bb)
+		values
+		<foreach collection="version_list" item="version"
+			separator=",">
+			(#{shp_id},#{version.shp_bb})
+		</foreach>
+	</insert>
+
+	<select id="select_spu_list"
+		resultType="com.atguigu.bean.T_MALL_PRODUCT">
+		select *
+		from t_mall_product
+		where pp_id=#{pp_id} and
+		flbh2=#{flbh2}
+	</select>
+
+
+	<insert id="insertSpu" useGeneratedKeys="true" keyColumn="id"
+		keyProperty="id" parameterType="com.atguigu.bean.T_MALL_PRODUCT">
+		insert into t_mall_product
 		(shp_mch,shp_tp,flbh1,flbh2,pp_id,shp_msh)
-	 values 
-	    (#{shp_mch},#{shp_tp},#{flbh1},#{flbh2},#{pp_id},#{shp_msh});
+		values
+		(#{shp_mch},#{shp_tp},#{flbh1},#{flbh2},#{pp_id},#{shp_msh});
 	</insert>
-	
+
+	<insert id="insert_spu" useGeneratedKeys="true" keyProperty="id">
+		insert into t_mall_product
+		(shp_mch,shp_tp,flbh1,flbh2,pp_id,shp_msh)
+		values
+		(#{shp_mch},#{shp_tp},#{flbh1},#{flbh2},#{pp_id},#{shp_msh});
+	</insert>
+
 	<insert id="insert_images">
 		insert into t_mall_product_image
 		(shp_id,url)
 		values
 		<foreach collection="list_image" item="image" separator=",">
-		(#{shp_id},#{image})
+			(#{shp_id},#{image})
 		</foreach>
-		 
+
 	</insert>
-	
+
 
 </mapper>
